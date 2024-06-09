@@ -6,10 +6,12 @@
 #include <iomanip>
 #include "Member.h"
 #include "Librarian.h"
-
+enum options{signup = 1, login  = 2};
+options option;
 std::map<std::string, std::string> auth_book;
-std::map<std::string, std::string>* target = new std::map<std::string, std::string>;
-void cleanf_string(const std::string& s) {
+std::map<std::string, std::string> target;
+
+bool cleanf_string(const std::string& s) {
     std::string author;
     std::string book;
     bool found_space = false;
@@ -25,9 +27,12 @@ void cleanf_string(const std::string& s) {
             book += c;
         }
     }
-
-    target->insert(std::make_pair(author, book));
-    delete target;
+    if (target.find(author) == target.end() && target[author] == book) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void clean_string(const std::string& s) {
@@ -46,8 +51,7 @@ void clean_string(const std::string& s) {
             book += c;
         }
     }
-
-    auth_book.insert(std::make_pair(author, book));
+    
 }
 
 
@@ -75,15 +79,21 @@ void print_books() {
 
 void sign_up(std::string name, std::string password) {
     Member them{ name, password };
+    target.insert(std::make_pair(name, password));
 }
 
-void login(std::string name, std::string password) {
+void log_in(std::string name, std::string password) {
     std::string line;
     std::ifstream in_file{ "logins.txt" };
     if (in_file) {
         while (getline(in_file, line)) {
-            cleanf_string(line);
-            
+            if (cleanf_string(line)) {
+                change_menu();
+            }
+            else {
+                std::cout << "You went wrong please try again\n";
+                main_menu();
+            }
         }
         in_file.close();
     }
@@ -92,6 +102,33 @@ void login(std::string name, std::string password) {
     }
 }
 
+void main_menu() {
+    int response;
+    std::string user, password;
+    std::cout << "Welcome to the Library!" << "\n";
+    std::cout << "Please sign in or login" << "\n";
+    std::cout << "Choose 0 for signin and 1 for login" << "\n";
+    std::cin >> response;
+    if (response == signup) {
+        std::cout << "Please type your name: " << "\n";
+        std::cin >> user;
+        std::cout << "Please type the password you want: " << "\n";
+        std::cin >> password;
+        sign_up(user,password);
+    }
+    else if (response == login) {
+        std::cout << "Please type your username: " << "\n";
+        std::cin >> user;
+        std::cout << "Please type your password: " << "\n";
+        std::cin >> password;
+        log_in(user, password);
+    }
+}
+void change_menu() {
+    std::cout << "Welcome to the Library!" << "\n";
+    std::cout << "Please sign in or login" << "\n";
+    std::cout << "Choose 0 for signin and 1 for login" << "\n";
+}
 int main() {
     get_books();
     print_books();

@@ -1,2 +1,6 @@
 ﻿  Library.cpp
-  Library.vcxproj -> C:\Users\Arjun Prinjha\Desktop\C++\Library\x64\Debug\Library.exe
+C:\Users\Arjun Prinjha\Desktop\C++\Library\Library-Management-System\Library.cpp(12,1): error C2144: syntax error: 'bool' should be preceded by ';'
+C:\Users\Arjun Prinjha\Desktop\C++\Library\Library-Management-System\Library.cpp(91,16): error C2440: 'delete': cannot convert from 'std::map<std::string,std::string,std::less<std::string>,std::allocator<std::pair<const std::string,std::string>>>' to 'void*'
+  C:\Users\Arjun Prinjha\Desktop\C++\Library\Library-Management-System\Library.cpp(91,16):
+  No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+  
