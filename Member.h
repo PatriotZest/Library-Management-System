@@ -6,4 +6,6 @@ private:
 	string password;
 public:
 	string name;
+	Member(string name, string password) : name{ name }, password{ password } {};
+	
 };

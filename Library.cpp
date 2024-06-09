@@ -4,9 +4,31 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include "Member.h"
+#include "Librarian.h"
 
 std::map<std::string, std::string> auth_book;
+std::map<std::string, std::string>* target = new std::map<std::string, std::string>;
+void cleanf_string(const std::string& s) {
+    std::string author;
+    std::string book;
+    bool found_space = false;
 
+    for (char c : s) {
+        if (c == '|' && !found_space) {
+            found_space = true;
+        }
+        else if (!found_space) {
+            author += c;
+        }
+        else {
+            book += c;
+        }
+    }
+
+    target->insert(std::make_pair(author, book));
+    delete target;
+}
 
 void clean_string(const std::string& s) {
     std::string author;
@@ -27,6 +49,7 @@ void clean_string(const std::string& s) {
 
     auth_book.insert(std::make_pair(author, book));
 }
+
 
 void get_books() {
     std::string line;
@@ -50,9 +73,27 @@ void print_books() {
     }
 }
 
+void sign_up(std::string name, std::string password) {
+    Member them{ name, password };
+}
+
+void login(std::string name, std::string password) {
+    std::string line;
+    std::ifstream in_file{ "logins.txt" };
+    if (in_file) {
+        while (getline(in_file, line)) {
+            cleanf_string(line);
+            
+        }
+        in_file.close();
+    }
+    else {
+        std::cerr << "Unable to find file" << std::endl;
+    }
+}
 
 int main() {
     get_books();
     print_books();
-    return 0
+    return 0;
 }
