@@ -2,8 +2,6 @@
 #include <iostream>
 #include <string>
 #include <map>
-#include <nlohmann\json.hpp>
-using json = nlohmann::json;
 
 extern std::map<std::string, std::string> auth_book;
 using namespace std;
@@ -14,13 +12,13 @@ string Librarian::get_password()
 
 void Librarian::add_books(string author, string book) {
 	auth_book.insert(make_pair(author, book));
-	cout << "Author: " << author << "\n" << "Book: " << book << " added";
+	//cout << "Author: " << author << "\n" << "Book: " << book << " added";
 }
 
 void Librarian::add_books_no_author(string book)
 {
 	auth_book.insert(make_pair("N/A", book));
-	cout << "Author: N/A" << "\n" << "Book: " << book << " added";
+	//cout << "Author: N/A" << "\n" << "Book: " << book << " added";
 }
 
 void Librarian::update_password(string &old_password)
